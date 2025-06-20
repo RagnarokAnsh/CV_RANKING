@@ -2,11 +2,12 @@
     <!-- Login Form -->
     <div *ngIf="currentMode === 'login'" class="auth-card">
       <h1 class="auth-title">CV Ranking Application</h1>
+      <hr class="mb-6 w-4/5 mx-auto border-t border-[#C7C6C6]" />
       <h2 class="auth-subtitle">Login to your account</h2>
       
       <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
         <div class="form-group">
-          <label class="form-label">Email *</label>
+          <label class="form-label">Email <span class="text-red-500">*</span></label>
           <input 
             type="email" 
             formControlName="email"
@@ -20,7 +21,7 @@
         </div>
   
         <div class="form-group">
-          <label class="form-label">Password *</label>
+          <label class="form-label">Password <span class="text-red-500">*</span></label>
           <div class="password-input-container">
             <input 
               [type]="showPassword ? 'text' : 'password'"
@@ -76,12 +77,13 @@
     <!-- Register Form -->
     <div *ngIf="currentMode === 'register'" class="auth-card-large">
       <h1 class="auth-title">CV Ranking Application</h1>
+      <hr class="mb-6 w-4/5 mx-auto border-t border-[#C7C6C6]" />
       <h2 class="auth-subtitle">Create Account</h2>
       
       <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
         <div class="form-row">
           <div class="form-group-half">
-            <label class="form-label">First Name *</label>
+            <label class="form-label">First Name <span class="text-red-500">*</span></label>
             <input 
               type="text" 
               formControlName="firstName"
@@ -95,7 +97,7 @@
           </div>
   
           <div class="form-group-half">
-            <label class="form-label">Last Name *</label>
+            <label class="form-label">Last Name <span class="text-red-500">*</span></label>
             <input 
               type="text" 
               formControlName="lastName"
@@ -111,7 +113,7 @@
   
         <div class="form-row">
           <div class="form-group-half">
-            <label class="form-label">Email *</label>
+            <label class="form-label">Email <span class="text-red-500">*</span></label>
             <input 
               type="email" 
               formControlName="email"
@@ -125,7 +127,7 @@
           </div>
   
           <div class="form-group-half">
-            <label class="form-label">Phone/Mobile *</label>
+            <label class="form-label">Phone/Mobile <span class="text-red-500">*</span></label>
             <div class="phone-container">
               <select formControlName="countryCode" class="country-code-select">
                 <option *ngFor="let country of countryCodes" [value]="country.code">
@@ -148,7 +150,7 @@
   
         <div class="form-row">
           <div class="form-group-half">
-            <label class="form-label">Date of Birth *</label>
+            <label class="form-label">Date of Birth <span class="text-red-500">*</span></label>
             <input 
               type="date" 
               formControlName="dateOfBirth"
@@ -161,7 +163,7 @@
           </div>
   
           <div class="form-group-half">
-            <label class="form-label">Gender *</label>
+            <label class="form-label">Gender <span class="text-red-500">*</span></label>
             <select 
               formControlName="gender"
               class="form-select"
@@ -180,7 +182,7 @@
   
         <div class="form-row">
           <div class="form-group-half">
-            <label class="form-label">Country *</label>
+            <label class="form-label">Country <span class="text-red-500">*</span></label>
             <select 
               formControlName="country"
               class="form-select"
@@ -197,7 +199,7 @@
           </div>
   
           <div class="form-group-half">
-            <label class="form-label">Nationality *</label>
+            <label class="form-label">Nationality <span class="text-red-500">*</span></label>
             <select 
               formControlName="nationality"
               class="form-select"
@@ -216,7 +218,7 @@
   
         <div class="form-row">
           <div class="form-group-half">
-            <label class="form-label">Password *</label>
+            <label class="form-label">Password <span class="text-red-500">*</span></label>
             <div class="password-input-container">
               <input 
                 [type]="showPassword ? 'text' : 'password'"
@@ -245,7 +247,7 @@
           </div>
   
           <div class="form-group-half">
-            <label class="form-label">Confirm Password *</label>
+            <label class="form-label">Confirm Password <span class="text-red-500">*</span></label>
             <div class="password-input-container">
               <input 
                 [type]="showConfirmPassword ? 'text' : 'password'"
@@ -254,7 +256,7 @@
                 placeholder="Confirm password"
                 [class.border-red-500]="getErrorMessage(registerForm, 'confirmPassword')"
               >
-              <button 
+              <!-- <button 
                 type="button"
                 class="password-toggle"
                 (click)="togglePasswordVisibility('confirmPassword')"
@@ -266,7 +268,7 @@
                 <svg *ngIf="showConfirmPassword" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21"></path>
                 </svg>
-              </button>
+              </button> -->
             </div>
             <div *ngIf="getErrorMessage(registerForm, 'confirmPassword')" class="error-message">
               {{ getErrorMessage(registerForm, 'confirmPassword') }}
@@ -296,11 +298,12 @@
     <!-- Forgot Password Form -->
     <div *ngIf="currentMode === 'forgot-password'" class="auth-card">
       <h1 class="auth-title">CV Ranking Application</h1>
+      <hr class="mb-6 w-4/5 mx-auto border-t border-[#C7C6C6]" />
       <h2 class="auth-subtitle">Forgot password</h2>
       
       <form [formGroup]="forgotPasswordForm" (ngSubmit)="onForgotPassword()">
         <div class="form-group">
-          <label class="form-label">Email *</label>
+          <label class="form-label">Email <span class="text-red-500">*</span></label>
           <input 
             type="email" 
             formControlName="email"
@@ -335,11 +338,12 @@
     <!-- Reset Password Form -->
     <div *ngIf="currentMode === 'reset-password'" class="auth-card">
       <h1 class="auth-title">CV Ranking Application</h1>
+      <hr class="mb-6 w-4/5 mx-auto border-t border-[#C7C6C6]" />
       <h2 class="auth-subtitle">Reset password</h2>
       
       <form [formGroup]="resetPasswordForm" (ngSubmit)="onResetPassword()">
         <div class="form-group">
-          <label class="form-label">Old Password *</label>
+          <label class="form-label">Old Password <span class="text-red-500">*</span></label>
           <div class="password-input-container">
             <input 
               [type]="showPassword ? 'text' : 'password'"
@@ -368,7 +372,7 @@
         </div>
   
         <div class="form-group">
-          <label class="form-label">New Password *</label>
+          <label class="form-label">New Password <span class="text-red-500">*</span></label>
           <div class="password-input-container">
             <input 
               [type]="showNewPassword ? 'text' : 'password'"
@@ -397,7 +401,7 @@
         </div>
   
         <div class="form-group">
-          <label class="form-label">Confirm Password *</label>
+          <label class="form-label">Confirm Password <span class="text-red-500">*</span></label>
           <div class="password-input-container">
             <input 
               [type]="showConfirmPassword ? 'text' : 'password'"
@@ -406,7 +410,7 @@
               placeholder="Confirm new password"
               [class.border-red-500]="getErrorMessage(resetPasswordForm, 'confirmPassword')"
             >
-            <button 
+            <!-- <button 
               type="button"
               class="password-toggle"
               (click)="togglePasswordVisibility('confirmPassword')"
@@ -418,7 +422,7 @@
               <svg *ngIf="showConfirmPassword" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21"></path>
               </svg>
-            </button>
+            </button> -->
           </div>
           <div *ngIf="getErrorMessage(resetPasswordForm, 'confirmPassword')" class="error-message">
             {{ getErrorMessage(resetPasswordForm, 'confirmPassword') }}

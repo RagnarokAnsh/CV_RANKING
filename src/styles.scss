@@ -57,7 +57,7 @@ body {
   }
 
   .form-input {
-    @apply w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all duration-200 bg-gray-50 text-gray-900 placeholder-gray-500;
+    @apply w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all duration-200 bg-gray-0 text-gray-900 placeholder-gray-500;
   }
 
   .form-input:focus {
@@ -65,7 +65,7 @@ body {
   }
 
   .form-select {
-    @apply w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all duration-200 bg-gray-50 text-gray-900 appearance-none cursor-pointer;
+    @apply w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all duration-200 bg-gray-0 text-gray-900 appearance-none cursor-pointer;
   }
 
   .form-select:focus {
@@ -101,11 +101,11 @@ body {
   }
 
   .country-code-select {
-    @apply w-20 px-2 py-3 border border-gray-300 rounded-l-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all duration-200 bg-gray-50 text-gray-900 text-sm;
+    @apply w-20 px-2 py-3 border border-gray-300 rounded-l-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all duration-200 bg-gray-0 text-gray-900 text-sm;
   }
 
   .phone-input {
-    @apply flex-1 px-4 py-3 border border-l-0 border-gray-300 rounded-r-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all duration-200 bg-gray-50 text-gray-900 placeholder-gray-500;
+    @apply flex-1 px-4 py-3 border border-l-0 border-gray-300 rounded-r-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all duration-200 bg-gray-0 text-gray-900 placeholder-gray-500;
   }
 
   .phone-container {
