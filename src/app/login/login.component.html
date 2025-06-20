@@ -1,1 +1,441 @@
-<p>login works!</p>
+<div class="auth-container">
+    <!-- Login Form -->
+    <div *ngIf="currentMode === 'login'" class="auth-card">
+      <h1 class="auth-title">CV Ranking Application</h1>
+      <h2 class="auth-subtitle">Login to your account</h2>
+      
+      <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+        <div class="form-group">
+          <label class="form-label">Email *</label>
+          <input 
+            type="email" 
+            formControlName="email"
+            class="form-input"
+            placeholder="Enter your email"
+            [class.border-red-500]="getErrorMessage(loginForm, 'email')"
+          >
+          <div *ngIf="getErrorMessage(loginForm, 'email')" class="error-message">
+            {{ getErrorMessage(loginForm, 'email') }}
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <label class="form-label">Password *</label>
+          <div class="password-input-container">
+            <input 
+              [type]="showPassword ? 'text' : 'password'"
+              formControlName="password"
+              class="form-input pr-12"
+              placeholder="Enter your password"
+              [class.border-red-500]="getErrorMessage(loginForm, 'password')"
+            >
+            <button 
+              type="button"
+              class="password-toggle"
+              (click)="togglePasswordVisibility('password')"
+            >
+              <svg *ngIf="!showPassword" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+              </svg>
+              <svg *ngIf="showPassword" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21"></path>
+              </svg>
+            </button>
+          </div>
+          <div *ngIf="getErrorMessage(loginForm, 'password')" class="error-message">
+            {{ getErrorMessage(loginForm, 'password') }}
+          </div>
+        </div>
+  
+        <div class="text-right mb-6">
+          <span class="auth-link" (click)="switchMode('forgot-password')">
+            Forgot password?
+          </span>
+        </div>
+  
+        <button 
+          type="submit" 
+          class="btn-primary"
+          [disabled]="isLoading"
+        >
+          <span *ngIf="!isLoading">Login</span>
+          <span *ngIf="isLoading" class="flex items-center justify-center">
+            <div class="loading-spinner mr-2"></div>
+            Logging in...
+          </span>
+        </button>
+  
+        <div class="auth-footer">
+          Don't have an account? 
+          <span class="auth-link ml-1" (click)="switchMode('register')">Register</span>
+        </div>
+      </form>
+    </div>
+  
+    <!-- Register Form -->
+    <div *ngIf="currentMode === 'register'" class="auth-card-large">
+      <h1 class="auth-title">CV Ranking Application</h1>
+      <h2 class="auth-subtitle">Create Account</h2>
+      
+      <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
+        <div class="form-row">
+          <div class="form-group-half">
+            <label class="form-label">First Name *</label>
+            <input 
+              type="text" 
+              formControlName="firstName"
+              class="form-input"
+              placeholder="Enter first name"
+              [class.border-red-500]="getErrorMessage(registerForm, 'firstName')"
+            >
+            <div *ngIf="getErrorMessage(registerForm, 'firstName')" class="error-message">
+              {{ getErrorMessage(registerForm, 'firstName') }}
+            </div>
+          </div>
+  
+          <div class="form-group-half">
+            <label class="form-label">Last Name *</label>
+            <input 
+              type="text" 
+              formControlName="lastName"
+              class="form-input"
+              placeholder="Enter last name"
+              [class.border-red-500]="getErrorMessage(registerForm, 'lastName')"
+            >
+            <div *ngIf="getErrorMessage(registerForm, 'lastName')" class="error-message">
+              {{ getErrorMessage(registerForm, 'lastName') }}
+            </div>
+          </div>
+        </div>
+  
+        <div class="form-row">
+          <div class="form-group-half">
+            <label class="form-label">Email *</label>
+            <input 
+              type="email" 
+              formControlName="email"
+              class="form-input"
+              placeholder="Enter your email"
+              [class.border-red-500]="getErrorMessage(registerForm, 'email')"
+            >
+            <div *ngIf="getErrorMessage(registerForm, 'email')" class="error-message">
+              {{ getErrorMessage(registerForm, 'email') }}
+            </div>
+          </div>
+  
+          <div class="form-group-half">
+            <label class="form-label">Phone/Mobile *</label>
+            <div class="phone-container">
+              <select formControlName="countryCode" class="country-code-select">
+                <option *ngFor="let country of countryCodes" [value]="country.code">
+                  {{ country.code }}
+                </option>
+              </select>
+              <input 
+                type="tel" 
+                formControlName="phone"
+                class="phone-input"
+                placeholder="1234567890"
+                [class.border-red-500]="getErrorMessage(registerForm, 'phone')"
+              >
+            </div>
+            <div *ngIf="getErrorMessage(registerForm, 'phone')" class="error-message">
+              {{ getErrorMessage(registerForm, 'phone') }}
+            </div>
+          </div>
+        </div>
+  
+        <div class="form-row">
+          <div class="form-group-half">
+            <label class="form-label">Date of Birth *</label>
+            <input 
+              type="date" 
+              formControlName="dateOfBirth"
+              class="form-input"
+              [class.border-red-500]="getErrorMessage(registerForm, 'dateOfBirth')"
+            >
+            <div *ngIf="getErrorMessage(registerForm, 'dateOfBirth')" class="error-message">
+              {{ getErrorMessage(registerForm, 'dateOfBirth') }}
+            </div>
+          </div>
+  
+          <div class="form-group-half">
+            <label class="form-label">Gender *</label>
+            <select 
+              formControlName="gender"
+              class="form-select"
+              [class.border-red-500]="getErrorMessage(registerForm, 'gender')"
+            >
+              <option value="">Select gender</option>
+              <option *ngFor="let gender of genderOptions" [value]="gender.value">
+                {{ gender.label }}
+              </option>
+            </select>
+            <div *ngIf="getErrorMessage(registerForm, 'gender')" class="error-message">
+              {{ getErrorMessage(registerForm, 'gender') }}
+            </div>
+          </div>
+        </div>
+  
+        <div class="form-row">
+          <div class="form-group-half">
+            <label class="form-label">Country *</label>
+            <select 
+              formControlName="country"
+              class="form-select"
+              [class.border-red-500]="getErrorMessage(registerForm, 'country')"
+            >
+              <option value="">Select country</option>
+              <option *ngFor="let country of countries" [value]="country">
+                {{ country }}
+              </option>
+            </select>
+            <div *ngIf="getErrorMessage(registerForm, 'country')" class="error-message">
+              {{ getErrorMessage(registerForm, 'country') }}
+            </div>
+          </div>
+  
+          <div class="form-group-half">
+            <label class="form-label">Nationality *</label>
+            <select 
+              formControlName="nationality"
+              class="form-select"
+              [class.border-red-500]="getErrorMessage(registerForm, 'nationality')"
+            >
+              <option value="">Select nationality</option>
+              <option *ngFor="let nationality of nationalities" [value]="nationality">
+                {{ nationality }}
+              </option>
+            </select>
+            <div *ngIf="getErrorMessage(registerForm, 'nationality')" class="error-message">
+              {{ getErrorMessage(registerForm, 'nationality') }}
+            </div>
+          </div>
+        </div>
+  
+        <div class="form-row">
+          <div class="form-group-half">
+            <label class="form-label">Password *</label>
+            <div class="password-input-container">
+              <input 
+                [type]="showPassword ? 'text' : 'password'"
+                formControlName="password"
+                class="form-input pr-12"
+                placeholder="Enter password"
+                [class.border-red-500]="getErrorMessage(registerForm, 'password')"
+              >
+              <button 
+                type="button"
+                class="password-toggle"
+                (click)="togglePasswordVisibility('password')"
+              >
+                <svg *ngIf="!showPassword" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                </svg>
+                <svg *ngIf="showPassword" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21"></path>
+                </svg>
+              </button>
+            </div>
+            <div *ngIf="getErrorMessage(registerForm, 'password')" class="error-message">
+              {{ getErrorMessage(registerForm, 'password') }}
+            </div>
+          </div>
+  
+          <div class="form-group-half">
+            <label class="form-label">Confirm Password *</label>
+            <div class="password-input-container">
+              <input 
+                [type]="showConfirmPassword ? 'text' : 'password'"
+                formControlName="confirmPassword"
+                class="form-input pr-12"
+                placeholder="Confirm password"
+                [class.border-red-500]="getErrorMessage(registerForm, 'confirmPassword')"
+              >
+              <button 
+                type="button"
+                class="password-toggle"
+                (click)="togglePasswordVisibility('confirmPassword')"
+              >
+                <svg *ngIf="!showConfirmPassword" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                </svg>
+                <svg *ngIf="showConfirmPassword" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21"></path>
+                </svg>
+              </button>
+            </div>
+            <div *ngIf="getErrorMessage(registerForm, 'confirmPassword')" class="error-message">
+              {{ getErrorMessage(registerForm, 'confirmPassword') }}
+            </div>
+          </div>
+        </div>
+  
+        <button 
+          type="submit" 
+          class="btn-primary mt-4"
+          [disabled]="isLoading"
+        >
+          <span *ngIf="!isLoading">Create Account</span>
+          <span *ngIf="isLoading" class="flex items-center justify-center">
+            <div class="loading-spinner mr-2"></div>
+            Creating Account...
+          </span>
+        </button>
+  
+        <div class="auth-footer">
+          Already have an account? 
+          <span class="auth-link ml-1" (click)="switchMode('login')">Login</span>
+        </div>
+      </form>
+    </div>
+  
+    <!-- Forgot Password Form -->
+    <div *ngIf="currentMode === 'forgot-password'" class="auth-card">
+      <h1 class="auth-title">CV Ranking Application</h1>
+      <h2 class="auth-subtitle">Forgot password</h2>
+      
+      <form [formGroup]="forgotPasswordForm" (ngSubmit)="onForgotPassword()">
+        <div class="form-group">
+          <label class="form-label">Email *</label>
+          <input 
+            type="email" 
+            formControlName="email"
+            class="form-input"
+            placeholder="Enter your email"
+            [class.border-red-500]="getErrorMessage(forgotPasswordForm, 'email')"
+          >
+          <div *ngIf="getErrorMessage(forgotPasswordForm, 'email')" class="error-message">
+            {{ getErrorMessage(forgotPasswordForm, 'email') }}
+          </div>
+        </div>
+  
+        <button 
+          type="submit" 
+          class="btn-primary"
+          [disabled]="isLoading"
+        >
+          <span *ngIf="!isLoading">Continue</span>
+          <span *ngIf="isLoading" class="flex items-center justify-center">
+            <div class="loading-spinner mr-2"></div>
+            Sending...
+          </span>
+        </button>
+  
+        <div class="auth-footer">
+          Login to your account - 
+          <span class="auth-link ml-1" (click)="switchMode('login')">Login</span>
+        </div>
+      </form>
+    </div>
+  
+    <!-- Reset Password Form -->
+    <div *ngIf="currentMode === 'reset-password'" class="auth-card">
+      <h1 class="auth-title">CV Ranking Application</h1>
+      <h2 class="auth-subtitle">Reset password</h2>
+      
+      <form [formGroup]="resetPasswordForm" (ngSubmit)="onResetPassword()">
+        <div class="form-group">
+          <label class="form-label">Old Password *</label>
+          <div class="password-input-container">
+            <input 
+              [type]="showPassword ? 'text' : 'password'"
+              formControlName="oldPassword"
+              class="form-input pr-12"
+              placeholder="Enter old password"
+              [class.border-red-500]="getErrorMessage(resetPasswordForm, 'oldPassword')"
+            >
+            <button 
+              type="button"
+              class="password-toggle"
+              (click)="togglePasswordVisibility('password')"
+            >
+              <svg *ngIf="!showPassword" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+              </svg>
+              <svg *ngIf="showPassword" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21"></path>
+              </svg>
+            </button>
+          </div>
+          <div *ngIf="getErrorMessage(resetPasswordForm, 'oldPassword')" class="error-message">
+            {{ getErrorMessage(resetPasswordForm, 'oldPassword') }}
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <label class="form-label">New Password *</label>
+          <div class="password-input-container">
+            <input 
+              [type]="showNewPassword ? 'text' : 'password'"
+              formControlName="newPassword"
+              class="form-input pr-12"
+              placeholder="Enter new password"
+              [class.border-red-500]="getErrorMessage(resetPasswordForm, 'newPassword')"
+            >
+            <button 
+              type="button"
+              class="password-toggle"
+              (click)="togglePasswordVisibility('newPassword')"
+            >
+              <svg *ngIf="!showNewPassword" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+              </svg>
+              <svg *ngIf="showNewPassword" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21"></path>
+              </svg>
+            </button>
+          </div>
+          <div *ngIf="getErrorMessage(resetPasswordForm, 'newPassword')" class="error-message">
+            {{ getErrorMessage(resetPasswordForm, 'newPassword') }}
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <label class="form-label">Confirm Password *</label>
+          <div class="password-input-container">
+            <input 
+              [type]="showConfirmPassword ? 'text' : 'password'"
+              formControlName="confirmPassword"
+              class="form-input pr-12"
+              placeholder="Confirm new password"
+              [class.border-red-500]="getErrorMessage(resetPasswordForm, 'confirmPassword')"
+            >
+            <button 
+              type="button"
+              class="password-toggle"
+              (click)="togglePasswordVisibility('confirmPassword')"
+            >
+              <svg *ngIf="!showConfirmPassword" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+              </svg>
+              <svg *ngIf="showConfirmPassword" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21"></path>
+              </svg>
+            </button>
+          </div>
+          <div *ngIf="getErrorMessage(resetPasswordForm, 'confirmPassword')" class="error-message">
+            {{ getErrorMessage(resetPasswordForm, 'confirmPassword') }}
+          </div>
+        </div>
+  
+        <button 
+          type="submit" 
+          class="btn-primary"
+          [disabled]="isLoading"
+        >
+          <span *ngIf="!isLoading">Reset password</span>
+          <span *ngIf="isLoading" class="flex items-center justify-center">
+            <div class="loading-spinner mr-2"></div>
+            Resetting...
+          </span>
+        </button>
+      </form>
+    </div>
+  </div>
